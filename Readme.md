@@ -3,7 +3,7 @@
 Examples and tutorial for basic C# learning.
 
 1. Console app
-2. Basic Entityu Framework
+2. Basic Entity Framework tutorial
 3. Basic API Application
 4. Basic MVC Application
 
