@@ -16,6 +16,26 @@ namespace HelloWorld2
 #pragma warning disable IDE0210 // Convert to top-level statements
         static void Main(string[] args)
         {
+            var car1 = new Car();
+            car1.Brand = "Honda";
+            car1.CarColor = Color.Orange;
+
+            var cs = CivilStatus.Single;
+
+            switch (cs)
+            {
+                case CivilStatus.Single:
+                    //...
+                    break;
+                case CivilStatus.Married:
+                    //...
+                    break;
+            }
+
+
+
+
+
             char[] letters2 = new char[100];
             char[] letters = { 'A', 'B', 'C', 'D', 'E' };
 
