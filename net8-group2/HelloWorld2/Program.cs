@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 
 namespace HelloWorld2
 {
     internal class Program
     {
-        static int Sum(int a, int b, object payload)
+        static int Sum(int a, int b)
         {
-            var o2 = payload.Clone();
+            // var o2 = payload.Clone();
 
 
             b = 7;
@@ -23,7 +23,7 @@ namespace HelloWorld2
 
             var a = Sum(a1, a3);
 
-            a1?
+            
 
             string text = "whatever ddddd...";
 
@@ -52,7 +52,7 @@ namespace HelloWorld2
             decimal budget = 1234567889.34M;  // BDC  Binary Digit Coding 1010 0 000 9 1001
 
 
-            var text = "eee";
+            var text2 = "eee";
             var age = 20;
 
             n1 = null;
