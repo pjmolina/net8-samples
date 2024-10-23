@@ -9,7 +9,7 @@ public abstract class Animal
         this.Specie = specie;
     }
 
-    public abstract void Feed();º
+    public abstract void Feed(); º
 
     public virtual int Walk()
     {
@@ -21,7 +21,7 @@ public class Dog : Animal
 {
     public string Color { get; set; } = "";
 
-    public Dog(string specie, string color): base(specie)
+    public Dog(string specie, string color) : base(specie)
     {
         this.Color = color;
     }
@@ -66,4 +66,20 @@ public interface IHasName
 public interface IHasSurname
 {
     public string Surname { get; set; }
+}
+
+public class Customer : IHasName, IHasSurname
+{
+    public string Name { get; set; }
+    public string Surname { get; set; }
+
+    public void Run(int km)
+    {
+        //....
+    }
+
+
+    // inner class
+    public class Address
+    { }
 }

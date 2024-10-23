@@ -1,4 +1,3 @@
-using System;
 using HelloWorld2.Domain;
 using HelloWorld2.Inheritance;
 
@@ -28,7 +27,7 @@ namespace HelloWorld2
 
             Dog[] animals = [b, c];
 
-           
+
 
 
 
@@ -50,7 +49,7 @@ namespace HelloWorld2
                 ]
             };
 
-           
+
 
 
 
@@ -230,7 +229,7 @@ namespace HelloWorld2
             // ...
 
 
-            for (var j=0; j < letters.Length; j++)
+            for (var j = 0; j < letters.Length; j++)
             {
                 var letter = letters[j]; // 0-index len=5  0..4    i++  i=i+1  i+=1
                 if (letter == 'X')

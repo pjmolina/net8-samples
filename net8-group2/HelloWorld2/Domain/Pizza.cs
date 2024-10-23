@@ -24,14 +24,14 @@ public class Pizza
         get
         {
             readTimes++;
-            return cost; 
+            return cost;
         }
         set
         {
             costChanges++;
             cost = value;
         }
-    } 
+    }
     public decimal Margin { get; set; } = 1.3M;
     public decimal Price => this.Cost * this.Margin;
     public Ingredient[] Ingredients { get; set; } = [];
@@ -57,9 +57,8 @@ public class Pizza
     public int SumNumbers(string res, bool status, params object[] objs)
     {
         // serviceSMTP.SendMail()
-        return  0; //...
+        return 0; //...
     }
-
 }
 
 //public class Ingredient
