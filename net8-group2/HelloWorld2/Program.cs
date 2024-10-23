@@ -1,5 +1,6 @@
 using System;
 using HelloWorld2.Domain;
+using HelloWorld2.Inheritance;
 
 namespace HelloWorld2
 {
@@ -17,26 +18,57 @@ namespace HelloWorld2
 #pragma warning disable IDE0210 // Convert to top-level statements
         static void Main(string[] args)
         {
-            var p1 = new Pizza();
+            // var a = new Animal("dog");
+            var b = new Dog("dog", "white");
+            var c = new Pet("dog", "black", "nela");
+
+            // a.Walk();
+            b.Walk();
+            c.Walk();
+
+            Dog[] animals = [b, c];
+
+           
+
+
+
+            // Creating objects 1. property by property 
+            var p1 = new Pizza("Margarita");
             p1.Cost = 10;
             p1.Cost = 11;
             p1.Margin = 1.4M;
+
+            // inline creation
+            var p2 = new Pizza("Carbonara")
+            {
+                Cost = 12,
+                Margin = 1.4M,
+                Description = "whatever",
+                Ingredients = [
+                    new Ingredient("Cheese", 100),
+                    new Ingredient("Tomato")
+                ]
+            };
+
+           
+
+
 
             var price = p1.Price;
 
 
             var car1 = new Car();
             car1.Brand = "Honda";
-            car1.CarColor = Color.Orange;
+            car1.CarColor = EColor.Orange;
 
-            var cs = CivilStatus.Single;
+            var cs = ECivilStatus.Single;
 
             switch (cs)
             {
-                case CivilStatus.Single:
+                case ECivilStatus.Single:
                     //...
                     break;
-                case CivilStatus.Married:
+                case ECivilStatus.Married:
                     //...
                     break;
             }
@@ -80,7 +112,7 @@ namespace HelloWorld2
             int a1 = 1;
             int a3 = 3;
 
-            var a = Sum(a1, a3);
+            var a23 = Sum(a1, a3);
 
             double a4 = 9.89;
             int myInt = (int)Math.Round(a4);  // 10

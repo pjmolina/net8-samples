@@ -1,6 +1,6 @@
 namespace HelloWorld2
 {
-    public enum Color
+    public enum EColor
     {
         Undefined = 0,
         Red = 1,
@@ -10,7 +10,7 @@ namespace HelloWorld2
         Orange = 3
     }
 
-    public enum CivilStatus
+    public enum ECivilStatus
     {
         Single = 'S',
         Married = 'M',
@@ -19,6 +19,6 @@ namespace HelloWorld2
     public class Car
     {
         public string Brand;
-        public Color CarColor;
+        public EColor CarColor;
     }
 }
