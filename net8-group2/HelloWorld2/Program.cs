@@ -1,4 +1,5 @@
 using System;
+using HelloWorld2.Domain;
 
 namespace HelloWorld2
 {
@@ -16,6 +17,14 @@ namespace HelloWorld2
 #pragma warning disable IDE0210 // Convert to top-level statements
         static void Main(string[] args)
         {
+            var p1 = new Pizza();
+            p1.Cost = 10;
+            p1.Cost = 11;
+            p1.Margin = 1.4M;
+
+            var price = p1.Price;
+
+
             var car1 = new Car();
             car1.Brand = "Honda";
             car1.CarColor = Color.Orange;
@@ -97,7 +106,7 @@ namespace HelloWorld2
             }
 
 
-            bool status = true;
+            bool status2 = true;
             int? n1 = 4;
             float volume = 12F; // EEEI binary  0.3   0101010100101 0.299999999 0 0.30000001 
             double speed = 123245.345589389283D;
@@ -189,9 +198,9 @@ namespace HelloWorld2
             // ...
 
 
-            for (var i=0; i < letters.Length; i++)
+            for (var j=0; j < letters.Length; j++)
             {
-                var letter = letters[i]; // 0-index len=5  0..4    i++  i=i+1  i+=1
+                var letter = letters[j]; // 0-index len=5  0..4    i++  i=i+1  i+=1
                 if (letter == 'X')
                 {
                     break;
@@ -204,13 +213,13 @@ namespace HelloWorld2
             }
             // P1
 
-            int i = 0;
-            while (i < letters.Length)
+            int k = 0;
+            while (k < letters.Length)
             {
                 // computations
-                var letter = letters[i];
+                var letter = letters[k];
                 // ...
-                i++;
+                k++;
             }
             // 0 or more times
 
@@ -219,11 +228,11 @@ namespace HelloWorld2
             do
             {
                 // computations
-                var letter = letters[i];
+                var letter = letters[k];
                 // ...
-                i++;
+                k++;
             }
-            while (i < letters.Length);
+            while (k < letters.Length);
             // p2
 
 
