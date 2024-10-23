@@ -33,7 +33,22 @@ namespace HelloWorld
 
         static void Main(string[] args)
         {
+            // var a = new Animal();
+            var b = new Dog("dog", "white");
+            var c = new Pet("dog", "black", "nela");
+            // a.Walk();
+            b.Walk();
+            c.Walk();
+
             
+
+
+            var pet1 = new Pet2();
+            pet1.AddYear();
+            pet1.AddYear();
+            pet1.AddYear();
+            pet1.GetAge();
+
 
             PrintReport("h1", 1, 2, 3, 4, 5, 6, true, "aa");
             PrintReport("h1", 1);
@@ -99,7 +114,7 @@ namespace HelloWorld
             // string to int
             try
             {
-                int a = int.Parse(s1);
+                int a24 = int.Parse(s1);
                 // statement 2
             }
             catch (FormatException ex)

@@ -1,6 +1,6 @@
 namespace HelloWorld.Domain;
 
-public enum PizzaState
+public enum EPizzaState
 {
     Order = 1,
     Coocking = 2,
@@ -11,7 +11,7 @@ public enum PizzaState
 
 public class Pizza
 {
-    public PizzaState State { get; set; } = PizzaState.Order;
+    public EPizzaState State { get; set; } = EPizzaState.Order;
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; set; }
     public decimal Cost { get; set; }
