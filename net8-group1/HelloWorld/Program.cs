@@ -19,13 +19,27 @@ namespace HelloWorld
         /// <param name="a">the first number</param>
         /// <param name="b">second</param>
         /// <returns>them sum of the numbers</returns>
-        static int Add(int a, int b)
+        static int Add(int a , int b = 0 )
         {
             return a + b;  //single line 
         }
 
+        static void PrintReport(string header = "h1", params object[] numbers )
+        {
+            //Console.WriteLine(header);
+            //foreach (int number in numbers)
+            //    Console.WriteLine(number);
+        }
+
         static void Main(string[] args)
         {
+            
+
+            PrintReport("h1", 1, 2, 3, 4, 5, 6, true, "aa");
+            PrintReport("h1", 1);
+            PrintReport("h1");
+            PrintReport();
+
             var custumer1 = new Customer("Loredana", "Surname");
             var fullname = custumer1.FullName;
 
