@@ -9,8 +9,7 @@ public abstract class Animal
         this.Specie = specie;
     }
 
-    public abstract void Feed(); º
-
+    public abstract void Feed(); 
     public virtual int Walk()
     {
         Console.WriteLine("Animal walking...");
@@ -25,7 +24,7 @@ public class Dog : Animal
     {
         this.Color = color;
     }
-    public void Feed()
+    public override void Feed()
     {
         // do somethings
     }
