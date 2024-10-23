@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Security.Cryptography;
+using HelloWorld.Domain;
 
 namespace HelloWorld
 {
@@ -25,13 +26,40 @@ namespace HelloWorld
 
         static void Main(string[] args)
         {
+            var custumer1 = new Customer("Loredana", "Surname");
+            var fullname = custumer1.FullName;
+
+            Pizza.GetCatalog();
+
+            // creating an object
+            var pizza1 = new Pizza("Margarita");
+            //pizza1.Name = "Margarita";
+            pizza1.Cost = 10;
+            pizza1.Margin = 1.4M;
+
+            // compact way of creating an object
+            var pizza2 = new Pizza("Margarita")
+            {
+                Cost = 10,
+                Description = "whatever...",
+                Ingredients = [
+                    new Ingredient("i1", 100),
+                    new Ingredient("i2", 50)
+                ]
+            };
+
+            pizza2.GetEstimatedTimeOfArrival();
+
+          
+
+
             var car1 = new Car();
             car1.Brand = "Honda";
             car1.CarColor = Color.Blue;
 
             var status = CivilStatus.Married;
 
-            switch(status) 
+            switch (status)
             {
                 case CivilStatus.Single:
                     break;
@@ -105,7 +133,7 @@ namespace HelloWorld
             var a1 = letters != null;
             var a2 = letters.Count();
 
-            if (a1 && a2) 
+            if (a1 && a2 > 0) 
             {
                 // yes
             } 
@@ -120,29 +148,29 @@ namespace HelloWorld
             {
                 case "yen":
                 case "eur":
-                    var result = "10 EUR";
+                    var result1 = "10 EUR";
                     break;
                 case "usd":
-                    var result = "10 USD";
+                    var result4 = "10 USD";
                     break;
                 default:
-                    var result = "10 " + currency;
+                    var result3 = "10 " + currency;
                     break;
             }
             // continue
 
             // C
-            for (var i=0; i < letters.Length; i++) 
+            for (var j=0; j < letters.Length; j++) 
             {
-                var letter = letters[i];
+                var letter1 = letters[j];
             }
             
-            int i = 0;
-            while (i < letters.Length) 
+            int k = 0;
+            while (k < letters.Length) 
             {
                 // statements
                 //...
-                i++;
+                k++;
             }
             // 0 or more times
 
@@ -150,9 +178,9 @@ namespace HelloWorld
             {
                 // statements
                 //...
-                i++;
+                k++;
             }
-            while (i < letters.Length);
+            while (k < letters.Length);
             // 1 or more times
 
             // LINQ
