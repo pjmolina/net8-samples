@@ -17,6 +17,10 @@ namespace HelloWorld2
 #pragma warning disable IDE0210 // Convert to top-level statements
         static void Main(string[] args)
         {
+            ErrorHandler.M1();
+
+            var stackPizza = new Collections.Stack<Pizza>();
+
             // var a = new Animal("dog");
             var b = new Dog("dog", "white");
             var c = new Pet("dog", "black", "nela");

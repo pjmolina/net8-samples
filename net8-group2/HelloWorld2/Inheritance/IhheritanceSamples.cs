@@ -78,7 +78,11 @@ public class Customer : IHasName, IHasSurname
     }
 
 
-    // inner class
-    public class Address
-    { }
+    
+}
+
+public struct Address
+{
+    public string Street { get; set; }
+    public string Country { get; set; }
 }
