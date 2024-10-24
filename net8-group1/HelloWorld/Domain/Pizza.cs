@@ -72,6 +72,19 @@ public class Address
     public string Country { get; set; } = "";
 }
 
+public struct Address2
+{
+    private string street;
+
+    public Address2() => this.Street = "-";
+
+    public string Street { get; set; }
+    public int Number { get; set; }
+    public string City { get; set; } = "";
+    public string Country { get; set; } = "";
+}
+
+
 
 //public class Ingredient
 //{

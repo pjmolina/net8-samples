@@ -33,6 +33,15 @@ namespace HelloWorld
 
         static void Main(string[] args)
         {
+            ErrorHandling.M1();
+
+
+            var deliveryService = new DeliverService();
+
+           
+
+            // deliveryService.DeliverOrder()
+
             // var a = new Animal();
             var b = new Dog("dog", "white");
             var c = new Pet("dog", "black", "nela");

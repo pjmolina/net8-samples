@@ -31,9 +31,34 @@ namespace HelloWorld.Domain
         }
         public DeliverInfo TrackOrder(int trackId)
         {
-            return new DeliverInfo() {
+            return new DeliverInfo()
+            {
                 //...
             };
         }
+    }
+
+    public interface IClipboard
+    {
+        void Cut();
+        void Paste();
+        void Copy();
+
+    }
+
+    public class BlackBoard : IClipboard
+    {
+        void Write() { }
+        void Draw() { }
+        void Clean() { }
+
+        public void Cut() { }
+        public void Paste() { }
+        public void Copy()
+        {
+            //...
+            //
+        }
+
     }
 }
