@@ -1,8 +1,5 @@
 namespace HelloWorld.Inheritance;
 
-using System.Runtime.Intrinsics.Arm;
-using System.Security.Cryptography;
-
 interface IAnimal
 {
     public string Specie { get; set; }
