@@ -4,6 +4,13 @@ public class Delegates
 {
     public delegate int Callback(string message);
 
+    public delegate int Sum(int a, int b);  //  (int, int) -> int
+
+    public static int Add(int x, int y)
+    {
+        return x + y;
+    }
+
     // Create a method for a delegate.
     public static int DelegateMethod(string message)
     {
@@ -16,10 +23,15 @@ public class Delegates
         Console.WriteLine("v2" + message);
         return 1;
     }
-
-
     public void M1()
     {
+        Sum pointerAFunction = null;
+
+        pointerAFunction = Add;
+
+        var c = pointerAFunction.Invoke(1, 2);
+
+
         // Instantiate the delegate.
         Callback handler = DelegateMethod;
 
@@ -30,7 +42,7 @@ public class Delegates
 }
 
 
-public delegate void Notify(); // delegate 
+public delegate bool Notify(string message); // delegate 
 
 public class ProcessBusinessLogic
 {
@@ -44,23 +56,25 @@ public class ProcessBusinessLogic
     }
     protected virtual void OnProcessCompleted() //protected virtual method 
     { //if ProcessCompleted is not null then call delegate      
-        ProcessCompleted?.Invoke();
+        var result = ProcessCompleted?.Invoke("something happeng");
         
     }
 }
-class Program2
+public class Program2
 {
-    public static void Main()
+    public static void Main2()
     {
         ProcessBusinessLogic bl = new ProcessBusinessLogic();
-        bl.ProcessCompleted += bl_ProcessCompleted; // register with an event
+
+        bl.ProcessCompleted += ProcessFinish; // register with an event
 
         bl.StartProcess();
     }
     // event handler 
-    public static void bl_ProcessCompleted()
+    public static bool ProcessFinish(string m)
     {
-        Console.WriteLine("Process Completed!");
+        Console.WriteLine("Process Completed!" + m);
+        return true;
     }
 }
 

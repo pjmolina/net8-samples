@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography;
+using HelloWorld.DelegatesEvents;
 using HelloWorld.Domain;
 
 namespace HelloWorld
@@ -33,6 +34,8 @@ namespace HelloWorld
 
         static void Main(string[] args)
         {
+            Program2.Main2();
+
             ErrorHandling.M1();
 
 

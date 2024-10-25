@@ -1,5 +1,7 @@
 namespace HelloWorld.Domain;
 
+using System.ComponentModel.DataAnnotations.Schema;
+
 public enum EPizzaState
 {
     Order = 1,
@@ -9,8 +11,10 @@ public enum EPizzaState
     Returned = 5
 }
 
+[Table("pizzas")]
 public class Pizza
 {
+   
     public EPizzaState State { get; set; } = EPizzaState.Order;
     public string Name { get; private set; } = string.Empty;
     public string? Description { get; set; }
@@ -19,6 +23,7 @@ public class Pizza
     public decimal Price => this.Cost * this.Margin;
     public Ingredient[] Ingredients { get; set; } = [];
 
+    
     public Pizza()
     {        
     }
@@ -27,11 +32,16 @@ public class Pizza
         this.Name = name;
     }
 
+    [Audit("main")]
+    // [Authentication(["Admin", "Operator"])]
+    // pre {  Open }
+    // post { Commit / Abort }
     public static string GetCatalog()
     {
         return "Margarita, Carbonara...";
     }
 
+   
     public void SendEmail(string email, string body)
     {
 
