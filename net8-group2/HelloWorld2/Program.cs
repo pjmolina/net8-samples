@@ -1,5 +1,6 @@
 using HelloWorld2.Domain;
 using HelloWorld2.Inheritance;
+using static HelloWorld2.EventSample;
 
 namespace HelloWorld2
 {
@@ -17,6 +18,20 @@ namespace HelloWorld2
 #pragma warning disable IDE0210 // Convert to top-level statements
         static void Main(string[] args)
         {
+            ProcessBusinessLogic bl = new ProcessBusinessLogic();
+
+            var client1 = new EventClient(1);
+            var client2 = new EventClient(2);
+
+            bl.ProcessCompleted += client1.OnComplete;
+            bl.ProcessCompleted += client2.OnComplete;
+
+            bl.StartProcess();
+
+            bl.ProcessCompleted -= client1.OnComplete;
+            bl.ProcessCompleted -= client2.OnComplete;
+
+
             ErrorHandler.M1();
 
             var stackPizza = new Collections.Stack<Pizza>();

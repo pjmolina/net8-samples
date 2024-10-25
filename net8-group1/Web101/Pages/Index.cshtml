@@ -1,0 +1,18 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to our application</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>Something else...</p>
+
+    <h2>Pizzas</h2>
+    <ul>
+        <li>@Model.Pizza1</li>
+        <li>@Model.Pizza2</li>
+    </ul>
+   
+</div>

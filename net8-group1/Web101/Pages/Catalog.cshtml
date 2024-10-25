@@ -1,0 +1,12 @@
+@page
+@model Web101.Pages.CatalogModel
+@{
+}
+
+<h1>Pizza Catalog</h1>
+<ul>
+    @foreach (var pizza in Model.Pizzas)
+    {
+        <li>@pizza.Name</li>
+    }
+</ul>
