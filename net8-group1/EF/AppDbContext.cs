@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EF
 {
+    /// <summary>
+    /// Sample:
+    ///  dotnet ef dbcontext scaffold "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group1\\EF\\db1.mdf;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer
+    /// </summary>
     public class AppDbContext: DbContext
     {
         public DbSet<Pizza> Pizzas { get; set; }
