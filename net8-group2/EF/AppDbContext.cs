@@ -1,37 +1,35 @@
+using System;
+using System.Collections.Generic;
 using EF.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace EF
 {
-    public class AppDbContext: DbContext
+    public partial class AppDbContext : DbContext
     {
-        public DbSet<Pizza> Pizzas { get; set; }
-        public DbSet<Ingredient> Ingridents { get; set; }
+        public virtual DbSet<Pizza> Pizzas { get; set; }
+        public virtual DbSet<Ingredient> Ingridents { get; set; }
 
         // one line per table 
 
 
-        public AppDbContext()
-        {
-        }
+        public AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
 
-        public static string ConnectionString()
-        {
+        public static string ConnectionString() =>
 
             //  /d/cursos/net8-samples/net8-group2/EF
-            return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group2\\EF\\db1.mdf;Integrated Security=True";
-        }
+            "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group2\\EF\\db1.mdf;Integrated Security=True";
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-       => optionsBuilder
-           .UseSqlServer(ConnectionString())
-           .EnableSensitiveDataLogging()     // for development only
-           // .LogTo(Console.WriteLine)
-           ;
+           => optionsBuilder
+               .UseSqlServer(ConnectionString())
+               .EnableSensitiveDataLogging()     // for development only
+                                                 // .LogTo(Console.WriteLine)
+               ;
 
 
         // fluent API
@@ -44,13 +42,13 @@ namespace EF
         {
             modelBuilder.Entity<Pizza>().HasIndex(p => p.Name);
 
-                                                        // Relational model
-                                                        // Pizza  ----------------     Ingrednet
-                                                              //            <---        PizzaId FK
+            // Relational model
+            // Pizza  ----------------     Ingrednet
+            //            <---        PizzaId FK
 
-                                                        // UML
+            // UML
             modelBuilder.Entity<Pizza>()                //  Pizza 1:1-------------0:* Ingredient
-                .HasMany(p => p.Ingredients)            //        Pizza       Ingredients
+                .HasMany<Ingredient>()            //        Pizza       Ingredients
                 .WithOne(i => i.Pizza)
                 .HasForeignKey(i => i.PizzaId);
 
