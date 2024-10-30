@@ -17,4 +17,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsetttings.pro.json">
+      <SubType>Component</SubType>
+    </None>
+  </ItemGroup>
+
 </Project>

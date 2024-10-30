@@ -1,0 +1,4 @@
+{
+  "env":  "pro",
+  "DB_Connection": "Data Source=db.acme.com,1443;Integrated Security=True"
+}

@@ -1,0 +1,5 @@
+{
+  "env": "local",
+  "DB_Connection": "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group1\\EF\\db1.mdf;Integrated Security=True",
+
+}

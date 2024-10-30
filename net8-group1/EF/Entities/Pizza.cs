@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,5 +26,8 @@ namespace EF.Entities
         public DateTime LaunchDate { get; set; }  // datetime time dates -
 
         public List<Ingredient> Ingredients { get; set; } = [];
+
+        [DefaultValue(false)]
+        public bool IsVegan { get; set; }
     }
 }
