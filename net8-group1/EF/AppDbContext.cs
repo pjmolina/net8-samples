@@ -7,11 +7,19 @@ using Microsoft.Extensions.Configuration;
 namespace EF
 {
     /// <summary>
-    /// Sample:
+    /// Sample scaffold (generate the DbContext and the entities):
     ///  dotnet ef dbcontext scaffold "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group1\\EF\\db1.mdf;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer
     ///
     /// Generate SQL from Entities:
     ///  dotnet ef dbcontext script -o create-database.sql
+    ///
+    /// Create a migration
+    ///    dotnet ef migrations Add <name>
+    /// List migrations (query)
+    ///    dotnet ef migrations list
+    /// Apply migrations
+    ///    dotnet ef database update [<specificMigration>]          v1 v2 v3 v4 (pending)
+    /// 
     /// </summary>
     public class AppDbContext: DbContext
     {
