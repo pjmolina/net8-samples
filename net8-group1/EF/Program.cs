@@ -13,6 +13,8 @@ namespace EF
 
             using (var context = new AppDbContext())
             {
+                CreateUsers(context);
+
                 DeleteAll(context);
 
                 CreatePizzas(context);
@@ -25,6 +27,29 @@ namespace EF
             }
 
         }
+
+        private static void CreateUsers(AppDbContext context)
+        {
+            context.User.ExecuteDelete();
+            var u1 = new User
+            {
+                // Id = 1,
+                Name = "Alicia"
+            };
+            var u2 = new User
+            {
+                // Id = 2,
+                Name = "Ana"
+            };
+            var u3 = new User
+            {
+                // Id = 3,
+                Name = "Julia"
+            };
+            context.AddRange(u1, u2, u3);
+            context.SaveChanges();
+        }
+
 
         private static void IncreasePrice(AppDbContext context, int percent)
         {
@@ -50,7 +75,7 @@ namespace EF
         {
             var pizza1 = new Pizza
             {
-                Id = 1,
+              //  Id = 1,
                 Name = "Carbonara",
                 Description = "Typical italian pizza",
                 Price = 10,
@@ -66,14 +91,14 @@ namespace EF
             };
             var pizza2 = new Pizza
             {
-                Id = 2,
+             //   Id = 2,
                 Name = "Margarita",
                 Description = "Basic Margarita",
                 Price = 8
             };
             var pizza3 = new Pizza
             {
-                Id = 3,
+              //  Id = 3,
                 Name = "Tuna",
                 Description = "Tuna & Onions",
                 Price = 12

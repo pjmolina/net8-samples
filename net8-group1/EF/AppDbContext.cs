@@ -18,15 +18,17 @@ namespace EF
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
 
+        public DbSet<User> User { get; set; }
+
         // More tables here....
 
         public static string ConnectionString()
         {
-            var cm = new ConfigurationManager();
-            var connectionString = cm["DB_Connection"] ?? "";
-            return connectionString;
+            //var cm = new ConfigurationManager();
+            //var connectionString = cm["DB_Connection"] ?? "";
+            //return connectionString;
 
-            // return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group1\\EF\\db1.mdf;Integrated Security=True";
+            return "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group1\\EF\\db1.mdf;Integrated Security=True";
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -50,6 +52,8 @@ namespace EF
                         .HasMany<Ingredient>(p => p.Ingredients).WithOne(p => p.Pizza);
                         
             modelBuilder.Entity<Ingredient>();
+
+            modelBuilder.Entity<User>();
 
 
             //modelBuilder.Entity<Pizza>().HasData(
