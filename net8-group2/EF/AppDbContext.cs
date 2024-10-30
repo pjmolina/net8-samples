@@ -5,10 +5,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EF
 {
+
+    /*
+     SQL from entities:
+        dotnet ef dbcontext script -o create-db.sql
+
+      Creatre dbcontext & entities
+         dotnet ef dbcontext scaffold "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\cursos\\net8-samples\\net8-group2\\EF\\db1.mdf;Integrated Security=True" M
+icrosoft.EntityFrameworkCore.SqlServer
+
+
+        1. To create a MIGRATION:
+                dotnet ef migrations add <NAME>
+        2. wHAT MIGRATIONS DO WE HAVE?
+                dotnet ef migrations list
+
+     */
     public partial class AppDbContext : DbContext
     {
         public virtual DbSet<Pizza> Pizzas { get; set; }
         public virtual DbSet<Ingredient> Ingridents { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         // one line per table 
 
@@ -49,11 +66,14 @@ namespace EF
             // UML
             modelBuilder.Entity<Pizza>()                //  Pizza 1:1-------------0:* Ingredient
                 .HasMany<Ingredient>()            //        Pizza       Ingredients
-                .WithOne(i => i.Pizza)
+                .WithOne()
                 .HasForeignKey(i => i.PizzaId);
 
 
             modelBuilder.Entity<Ingredient>();
+
+            modelBuilder.Entity<User>();
+
 
             //modelBuilder.Entity<Pizza>().HasData(
             //    new Pizza() { Id = 1, Name = "Carbonara", Description = "Carbonara", Price = 10 },

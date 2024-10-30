@@ -38,6 +38,15 @@ public class Program
     Webserver -> https://locashost:7127  -> 80 http  https 443
         URL -> controller
 
+        HTTP / HTTPS  TLS
+            Verbs:
+                GET  <- query /pizza/1
+                POST  ->  create new resources   /pizza
+                PUT   ->   modify  PUT /pizza/1
+                DELETE ->   remove  DELETE  /pizza/1
+                HEAD
+                OPTIONS
+                TRACE
 
             browser curl postman  -> https://locashost:7127/version
  

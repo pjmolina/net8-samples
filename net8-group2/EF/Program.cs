@@ -47,30 +47,30 @@ namespace EF
         {
             var pizza1 = new Pizza
             {
-                Id = 1,
+                // Id = 1,
                 Name = "Carbonara",
                 Description = "Typical italian pizza",
                 Price = 10,
                 Ingredients =
                 [
-                    new()
-                    {
-                        Code = "CHEE",
-                        Name = "Cheese",
-                        Quantity  = 100
-                    }
+                    //new()
+                    //{
+                    //    Code = "CHEE",
+                    //    Name = "Cheese",
+                    //    Quantity  = 100
+                    //}
                 ]
             };
             var pizza2 = new Pizza
             {
-                Id = 2,
+                // Id = 2,
                 Name = "Margarita",
                 Description = "Basic Margarita",
                 Price = 8
             };
             var pizza3 = new Pizza
             {
-                Id = 3,
+                // Id = 3,
                 Name = "Tuna",
                 Description = "Tuna & Onions",
                 Price = 12
@@ -78,7 +78,7 @@ namespace EF
 
             var pizza4 = new Pizza
             {
-                Id = 4,
+                // Id = 4,
                 Name = "Carbonara sss",
                 Description = "Typical italian pizzasss",
                 Price = 102
@@ -92,6 +92,18 @@ namespace EF
             {
                 context.AddRange(pizza1, pizza2, pizza3, pizza4);
                 context.SaveChanges();  // <- SQL executed here
+
+                pizza1.Ingredients = [
+                    new()
+                    {
+                        PizzaId = pizza1.Id,
+                        Code = "CHEE",
+                        Name = "Cheese",
+                        Quantity  = 100
+                    }
+                ];
+                context.SaveChanges();
+
             }
             catch (SqlException ex)
             {

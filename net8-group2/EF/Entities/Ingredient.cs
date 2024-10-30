@@ -20,6 +20,6 @@ public class Ingredient
 
     public int PizzaId { get; set; }
 
-    public virtual Pizza? Pizza { get; set; }
+    // public virtual Pizza? Pizza { get; set; }
 
 }
