@@ -33,3 +33,12 @@ public class Program
         app.Run();
     }
 }
+
+/*
+    Webserver -> https://locashost:7127  -> 80 http  https 443
+        URL -> controller
+
+
+            browser curl postman  -> https://locashost:7127/version
+ 
+ */
