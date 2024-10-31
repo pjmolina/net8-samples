@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 public class VersionController : ControllerBase
 {
     [HttpGet]
+   
     public VersionInfo GetVersion()
     {
         return new VersionInfo
@@ -21,6 +22,41 @@ public class VersionController : ControllerBase
         };
     }
 
+
+    [HttpGet]
+    [Route("sum")]  // GET      GET /version/sum?a=1&b=2     (query string)
+    public int Sum([FromQuery] int a, [FromQuery] int b)
+    {
+        return a + b;
+    }
+
+    [HttpGet]
+    [Route("sum2/{a}/{b}")]  // GET /version/sum2/1/2      (Route)
+    public double Sum2([FromRoute] double a, [FromRoute] double b)
+    {
+        return a + b;
+    }
+
+
+    private static int _seq = 1;
+
+    [HttpPost]
+    [Route("user")]
+    public UserDto CreateUser([FromBody] UserDto user)
+    {
+        // simulationg we are storing this in DB
+
+        user.Id = _seq++;
+        return user;
+    }
+
+}
+
+public class UserDto  // Data Transfer Object ==  Contract
+{
+    public int? Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
 
 

@@ -1,6 +1,8 @@
 
 namespace Api1;
 
+using Api1.Services;
+
 public class Program
 {
     public static void Main(string[] args)
@@ -8,6 +10,8 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+
+        builder.Services.AddSingleton<IPizzaService, PizzaService>();
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
