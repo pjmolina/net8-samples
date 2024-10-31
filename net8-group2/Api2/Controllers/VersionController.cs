@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 public class VersionController : ControllerBase
 {
     [HttpGet]
+    //[Produces("application/xml")]
     public VersionInfo GetVersion()
     {
         return new VersionInfo
@@ -19,6 +20,39 @@ public class VersionController : ControllerBase
             Server = Dns.GetHostName()
         };
     }
+
+    [HttpGet]
+    [Route("sum1/{a}/{b}")]    // GET /version/sum1/1/2
+    public int Sum1([FromRoute] int a, [FromRoute] int b)
+    {
+        return a + b;
+    }
+
+    [HttpGet]
+    [Route("sum2")]    // GET /version/sum1?a=3&b=4    (query string) 
+    public int Sum2([FromQuery] int a, [FromQuery] int b)
+    {
+        return a + b;
+    }
+
+    private static int seq = 1;
+
+    [HttpPost]
+    [Route("user")]
+    public UserDto CreateUser(UserDto user)
+    {
+        user.Id = seq++;
+        // storing DB (simulated)
+        return user;
+    }
+
+}
+
+public class UserDto   //DTO = Data Transfer Object -  Contracts 
+{
+    public int? Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
 
 public class VersionInfo

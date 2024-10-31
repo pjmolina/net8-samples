@@ -1,6 +1,8 @@
 
 namespace Api2;
 
+using Api2.Services;
+
 public class Program
 {
     public static void Main(string[] args)
@@ -9,7 +11,14 @@ public class Program
 
         // Add services to the container.
 
-        builder.Services.AddControllers();
+        // builder.Services.AddScoped<IPizzaService, PizzaService>();
+        builder.Services.AddSingleton<IPizzaService, PizzaService>();
+
+
+        builder.Services
+            .AddControllers()
+            .AddXmlSerializerFormatters();
+
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
