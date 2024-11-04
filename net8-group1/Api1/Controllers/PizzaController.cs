@@ -1,5 +1,7 @@
 using Api1.Dto;
+using Api1.Models;
 using Api1.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api1.Controllers
@@ -21,10 +23,19 @@ namespace Api1.Controllers
 
         // query pizzas, create pizzas, change CRUD
 
+        // GET /pizza?q=marga
+        // GET /pizza?max=20.5&min=10&q=tomato
         [HttpGet]
-        public List<PizzaDto> GetAll()
+        public List<PizzaDto> GetAll([FromQuery] string? q, [FromQuery] decimal? min, [FromQuery] decimal? max)
         {
-            return _pizzaService.GetAll();
+            var searchCriteria = new PizzaSearchCriteria
+            {
+                Query = q,
+                MaxPrice = max,
+                MinPrice = min
+            };
+
+            return _pizzaService.GetAll(searchCriteria);
         }
         [HttpGet]
         [Route("{id}")]
@@ -33,11 +44,13 @@ namespace Api1.Controllers
             var found = _pizzaService.GetById(id);
             return found;
         }
+        
         [HttpPost]
         public PizzaDto Create([FromBody] PizzaDto pizza)
         {
             return _pizzaService.Create(pizza);
         }
+        // [Authorize("admin")]
         [HttpPut]
         [Route("{id}")]
         public PizzaDto Update([FromRoute] int id, [FromBody] PizzaDto pizza)
@@ -56,7 +69,7 @@ namespace Api1.Controllers
         [Route("delete-all")]
         public bool Delete()
         {
-            foreach (var pizza in _pizzaService.GetAll())
+            foreach (var pizza in _pizzaService.GetAll(new PizzaSearchCriteria()))
             {
                 _pizzaService.Delete(pizza.Id);
             }

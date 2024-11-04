@@ -1,10 +1,11 @@
 namespace Api1.Services;
 
 using Api1.Dto;
+using Api1.Models;
 
 public interface IPizzaService
 {
-    public List<PizzaDto> GetAll();
+    public List<PizzaDto> GetAll(PizzaSearchCriteria criteria);
     public PizzaDto? GetById(int id);
     public PizzaDto Create(PizzaDto pizza);
     public PizzaDto Update(int id, PizzaDto pizza);
@@ -59,9 +60,30 @@ public class PizzaService : IPizzaService
             return pizza;
         }
     }
-    public List<PizzaDto> GetAll()
+    public List<PizzaDto> GetAll(PizzaSearchCriteria criteria)
     {
-        return fakeDatabase;
+        IEnumerable<PizzaDto> res = fakeDatabase;
+
+        if (criteria.Query != null)
+        {
+            res = fakeDatabase.Where(p =>
+                 p.Name.Contains(criteria.Query, StringComparison.InvariantCultureIgnoreCase) ||
+                 ((p.Description == null)
+                    ? false
+                    : p.Description.Contains(criteria.Query, StringComparison.InvariantCultureIgnoreCase)
+                 )
+            );
+        }
+        if (criteria.MinPrice != null)
+        {
+            res = res.Where(p => p.Price >= criteria.MinPrice);
+        }
+        if (criteria.MaxPrice != null)
+        {
+            res = res.Where(p => p.Price <= criteria.MaxPrice);
+        }
+
+        return res.ToList();
     }
     public PizzaDto? GetById(int id)
     {
