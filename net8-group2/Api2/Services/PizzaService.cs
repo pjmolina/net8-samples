@@ -1,10 +1,11 @@
 namespace Api2.Services;
 
 using Api2.Dto;
+using Api2.Models;
 
 public interface IPizzaService
 {
-    public List<PizzaDto> GetAll();
+    public List<PizzaDto> GetAll(PizzaSearchCriteria criteria);
     public PizzaDto? GetById(int id);
     public PizzaDto Create(PizzaUpdateDto pizza);
     public PizzaDto? Update(int id, PizzaUpdateDto pizza);
@@ -41,9 +42,27 @@ public class PizzaService : IPizzaService
         }
     };
 
-    public List<PizzaDto> GetAll()
+    public List<PizzaDto> GetAll(PizzaSearchCriteria criteria)
     {
-        return fakeDatabase;
+        IEnumerable<PizzaDto> res = fakeDatabase;
+
+        if (criteria.Query != null)
+        {
+            res = res.Where(p =>
+                p.Name.Contains(criteria.Query, StringComparison.InvariantCultureIgnoreCase) ||
+                (p.Description?.Contains(criteria.Query, StringComparison.InvariantCultureIgnoreCase) ?? false)
+            );
+        }
+        if (criteria.MinPrice != null)
+        {
+            res = res.Where(p => p.Price >= criteria.MinPrice);
+        }
+        if (criteria.MaxPrice != null)
+        {
+            res = res.Where(p => p.Price <= criteria.MaxPrice);
+        }
+
+        return res.ToList();
     }
 
     public PizzaDto Create(PizzaUpdateDto pizza)
@@ -59,6 +78,7 @@ public class PizzaService : IPizzaService
             Price = pizza.Price
         };
         fakeDatabase.Add(newPizza);
+        // context.SaveChanges();
         return newPizza;
     }
   
@@ -79,6 +99,7 @@ public class PizzaService : IPizzaService
             found.Name = pizza.Name;
             found.Description = pizza.Description;
             found.Price = pizza.Price;
+            // context.SaveChanges();
             return found;
         }
 

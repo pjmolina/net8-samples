@@ -1,7 +1,9 @@
 namespace Api2.Controllers;
 
 using Api2.Dto;
+using Api2.Models;
 using Api2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,20 +15,41 @@ using Microsoft.AspNetCore.Mvc;
 public class PizzaController : ControllerBase
 {
     private IPizzaService _pizzaService;
+    private IConfiguration _config;
 
-    public PizzaController(IPizzaService pizzaService)
+    public PizzaController(IPizzaService pizzaService, IConfiguration config)  // mock   DECOUPLING
     {
         // Dependency Injection -
         // Inversion of Control
 
-        _pizzaService = pizzaService;  // new PizzaServiceV4()
+        _pizzaService = pizzaService;  // new PizzaServiceV4()  // fACTORY ctx -> new v1 new v2
+        _config = config;
     }
 
+    // GET /pizzas  -- all pizzas
+    // GET /pizzas?q=carbo  
+    // GET /pizzas?min=10&q=marga&max=20
 
     [HttpGet]
-    public List<PizzaDto> GetAll()
+    [Authorize(Roles = "admin, operator")]
+    public List<PizzaDto> GetAll([FromQuery] string? q, [FromQuery] decimal? max, [FromQuery] decimal? min,
+        [FromHeader(Name = "x-api-key")] string? password)
     {
-        return _pizzaService.GetAll();
+        var wellKnownPassword = _config.GetValue<string>("MasterPassword");
+
+        if (!wellKnownPassword.Equals(password))
+        {
+            return []; // you shall not pass
+        }
+
+        var criteria = new PizzaSearchCriteria
+        {
+            Query = q,
+            MinPrice = min,
+            MaxPrice = max
+        };
+
+        return _pizzaService.GetAll(criteria);
     }
     [HttpGet]
     [Route("{id}")]
