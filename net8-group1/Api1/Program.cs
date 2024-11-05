@@ -1,6 +1,7 @@
 
 namespace Api1;
 
+using System.Text.Json.Serialization;
 using Api1.Services;
 
 public class Program
@@ -12,8 +13,15 @@ public class Program
         // Add services to the container.
 
         builder.Services.AddSingleton<IPizzaService, PizzaService>();
+        builder.Services.AddSingleton<IPlanetService, PlanetService>();
 
-        builder.Services.AddControllers();
+        builder.Services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+            });
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
