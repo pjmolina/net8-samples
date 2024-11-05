@@ -13,6 +13,7 @@ public class Program
 
         // builder.Services.AddScoped<IPizzaService, PizzaService>();
         builder.Services.AddSingleton<IPizzaService, PizzaService>();
+        builder.Services.AddScoped<IPlanetService, PlanetService>();
 
 
         builder.Services
