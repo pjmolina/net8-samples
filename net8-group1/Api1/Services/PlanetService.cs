@@ -2,6 +2,7 @@ namespace Api1.Services;
 
 using System.ComponentModel;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using Api1.Converters;
 using Api1.Models;
@@ -41,43 +42,77 @@ public class PlanetService : IPlanetService
         {
 
             var url = $"{_baseApiUrl}/planets";
-            using (var response = await client.GetAsync(url))  // launch ----------- ?? ms ---- response
+
+            // req / res 
+
+            var req = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(url),
+            };
+            req.Headers.Add("x-version", "123");
+            req.Headers.Add("accept", "application/xml");
+            req.Headers.Add("x-api-key", "user1:1234");
+            req.Headers.Add("authorization", "Bearer JWT");
+
+
+            using (var response = await client.SendAsync(req))
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var options = new JsonSerializerOptions
                     {
-                       PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                       PropertyNameCaseInsensitive = true,
-                       Converters = {
+                        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                        PropertyNameCaseInsensitive = true,
+                        Converters = {
                             new DateTimeJsonConverter(),
                             new IntJsonConverter()
                        }
                     };
-
                     var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), options);
                     return page.Results;
-
-                    // Debugging version
-                    //// 200 ok
-                    //foreach (var header in response.Content.Headers)
-                    //{
-                    //    var values = string.Join(", ", header.Value);
-
-                    //    Console.WriteLine($"{header.Key} = {values}");
-                    //}
-                    //using (var reader = new StreamReader(response.Content.ReadAsStream()))
-                    //{
-                    //    var text = reader.ReadToEnd();
-                    //    Console.WriteLine(text);
-                    //}
-
-                }
-                else
-                {
-                    // error handling
                 }
             }
+
+
+
+            //using (var response = await client.GetAsync(url))  // launch ----------- ?? ms ---- response
+            //{
+            //    if (response.StatusCode == HttpStatusCode.OK)
+            //    {
+            //        var options = new JsonSerializerOptions
+            //        {
+            //           PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            //           PropertyNameCaseInsensitive = true,
+            //           Converters = {
+            //                new DateTimeJsonConverter(),
+            //                new IntJsonConverter()
+            //           }
+            //        };
+
+            //        var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), options);
+            //        return page.Results;
+
+            //        // Debugging version
+            //        //// 200 ok
+            //        //foreach (var header in response.Content.Headers)
+            //        //{
+            //        //    var values = string.Join(", ", header.Value);
+
+            //        //    Console.WriteLine($"{header.Key} = {values}");
+            //        //}
+            //        //using (var reader = new StreamReader(response.Content.ReadAsStream()))
+            //        //{
+            //        //    var text = reader.ReadToEnd();
+            //        //    Console.WriteLine(text);
+            //        //}
+
+            //    }
+            //    else
+            //    {
+            //        // error handling
+            //    }
+            //}
         }
         catch (Exception ex)
         {
