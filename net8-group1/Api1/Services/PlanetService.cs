@@ -7,11 +7,12 @@ using System.Text.Json;
 using Api1.Converters;
 using Api1.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 public interface IPlanetService
 {
     public Task<List<Planet>> GetPlanets();  // list  task async
-    public Planet? GetPlanetById(int id);
+    public Task<Planet?> GetPlanetById(int id);
 }
 
 public class PlanetService : IPlanetService
@@ -21,17 +22,58 @@ public class PlanetService : IPlanetService
 
     static readonly HttpClient client = new HttpClient();
 
+    private JsonSerializerOptions _jsonOptions;
+
 
     public PlanetService(IConfiguration config)
     {
         _config = config;
         _baseApiUrl = config.GetValue<string>("StarWarsAPI:BaseApi") ?? "";
+
+        _jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            PropertyNameCaseInsensitive = true,
+            Converters =
+            {
+                new DateTimeJsonConverter(),
+                new IntJsonConverter()
+            }
+        };
     }
 
 
     //  GET https://swapi.dev/api/planets/{id}/
-    public Planet? GetPlanetById(int id)
+    public async Task<Planet?> GetPlanetById(int id)
     {
+        try
+        {
+            var url = $"{_baseApiUrl}/planets/{id}";
+
+            var req = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(url),
+            };
+            req.Headers.Add("x-version", "123");
+            req.Headers.Add("accept", "application/json");
+            req.Headers.Add("x-api-key", "user1:1234");
+            req.Headers.Add("authorization", "Bearer JWT");
+
+            using (var response = await client.SendAsync(req))
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var planet = JsonSerializer.Deserialize<Planet>(response.Content.ReadAsStream(), _jsonOptions);
+                    return planet;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return null;
+        }
         return null;
     }
 
@@ -60,16 +102,7 @@ public class PlanetService : IPlanetService
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    var options = new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-                        PropertyNameCaseInsensitive = true,
-                        Converters = {
-                            new DateTimeJsonConverter(),
-                            new IntJsonConverter()
-                       }
-                    };
-                    var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), options);
+                    var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), _jsonOptions);
                     return page.Results;
                 }
             }

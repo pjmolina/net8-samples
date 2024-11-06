@@ -26,9 +26,21 @@ namespace Api1.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public Planet? GetById(int id)
+        public async Task<ActionResult<Planet?>> GetById(int id)
         {
-            return _planetService.GetPlanetById(id);
+            var planet = await _planetService.GetPlanetById(id);
+
+            if (planet == null)
+            {
+                // 404 Not found
+                return NotFound($"The planet you are looking for does not exists: {id}");
+               
+            }
+            else
+            {
+                // 200 OK
+                return Ok(planet);
+            }
         }
 
     }
