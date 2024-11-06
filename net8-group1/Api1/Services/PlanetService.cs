@@ -1,7 +1,9 @@
 namespace Api1.Services;
 
+using System.ComponentModel;
 using System.Net;
 using System.Text.Json;
+using Api1.Converters;
 using Api1.Models;
 using Microsoft.Extensions.Configuration;
 
@@ -45,11 +47,16 @@ public class PlanetService : IPlanetService
                 {
                     var options = new JsonSerializerOptions
                     {
-                       // ...
+                       PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+                       PropertyNameCaseInsensitive = true,
+                       Converters = {
+                            new DateTimeJsonConverter(),
+                            new IntJsonConverter()
+                       }
                     };
 
                     var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), options);
-                    return page.Result;
+                    return page.Results;
 
                     // Debugging version
                     //// 200 ok
