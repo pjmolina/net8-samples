@@ -2,12 +2,14 @@ namespace Api2.Services;
 
 using System.Net;
 using System.Text.Json;
+using Api2.Converters;
 using Api2.Models;
+using Microsoft.Extensions.Options;
 
 public interface IPlanetService
 {
     public Task<List<Planet>> GetPlanets();
-    public Planet? GetPlanetById(int id);
+    public Task<Planet?> GetPlanetById(int id);
 }
 
 public class PlanetService : IPlanetService
@@ -18,10 +20,22 @@ public class PlanetService : IPlanetService
 
     private string _baseApiUrl = "";
 
+    private JsonSerializerOptions _jsonOptions;
+
 
     public PlanetService(IConfiguration config)
     {
-        _baseApiUrl = config.GetValue<string>("StarWarsAPI:BaseUrl") ?? "";      
+        _baseApiUrl = config.GetValue<string>("StarWarsAPI:BaseUrl") ?? "";
+        _jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+            Converters =
+                {
+                    new DateTimeJsonConverter(),
+                    new LongJsonConverter()
+                }
+        };
     }
 
     // config
@@ -33,10 +47,28 @@ public class PlanetService : IPlanetService
 
 
     // GET https://swapi.dev/api/planets/{id}/
-    public Planet? GetPlanetById(int id)
+    public async Task<Planet?> GetPlanetById(int id)
     {
         var url = $"{_baseApiUrl}/planets/{id}/";
+        var req = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri(url)
+        };
+        req.Headers.Add("accept", "application/json");
 
+        using var response = await _http.SendAsync(req);
+
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            var planet = JsonSerializer.Deserialize<Planet?>(response.Content.ReadAsStream(), _jsonOptions);
+            return planet;
+        }
+        else
+        {
+            // Error
+            Console.WriteLine($"{response.RequestMessage}");
+        }
         return null;
     }
 
@@ -45,18 +77,24 @@ public class PlanetService : IPlanetService
     {
         var url = $"{_baseApiUrl}/planets/";
 
-        var response = await _http.GetAsync(url);
+        var req = new HttpRequestMessage
+        {
+            Method = HttpMethod.Get,
+            RequestUri = new Uri(url)
+        };
+        req.Headers.Add("x-version", "123");
+        req.Headers.Add("x-api-key", "accout1:1234");
+        req.Headers.Add("accept", "application/json");
+        req.Headers.Add("authorization", "Bearer JWT.daspdlañdlñaldñalñl");
+
+        using var response = await _http.SendAsync(req);
+
+        //var response = await _http.GetAsync(url);
 
         if (response.StatusCode == HttpStatusCode.OK)
         {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-            };
-
-            var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), options);
-            return page.Result;
+            var page = JsonSerializer.Deserialize<Page<Planet>>(response.Content.ReadAsStream(), _jsonOptions);
+            return page.Results;
 
             // Debug purpouse
             //foreach (var header in response.Headers)

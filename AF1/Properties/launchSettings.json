@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "AF1": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7221",
+      "launchBrowser": false
+    }
+  }
+}

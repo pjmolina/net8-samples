@@ -59,9 +59,13 @@ public class PizzaController : ControllerBase
     }
 
     [HttpPost]
-    public PizzaDto CreatePizza([FromBody] PizzaUpdateDto pizza)
+    public ActionResult<PizzaDto> CreatePizza([FromBody] PizzaUpdateDto pizza)
     {
-        return _pizzaService.Create(pizza);
+        // 200 OK
+        // 201 Created  POST /pizzas ->   /pizzas/5
+        var obj = _pizzaService.Create(pizza);
+        var uri = new Uri($"https://localhost:7136/pizzas/{obj.Id}/");
+        return Created(uri, obj);
     }
 
     [HttpPut]

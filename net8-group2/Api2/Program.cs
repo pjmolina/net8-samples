@@ -1,6 +1,8 @@
 
 namespace Api2;
 
+using System.Text.Json;
+using Api2.Converters;
 using Api2.Services;
 
 public class Program
@@ -17,7 +19,11 @@ public class Program
 
 
         builder.Services
-            .AddControllers()
+            .AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                // options.JsonSerializerOptions.Converters.Add(new LongJsonConverter());
+            })
             .AddXmlSerializerFormatters();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
